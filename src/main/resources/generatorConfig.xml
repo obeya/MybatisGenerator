@@ -27,7 +27,7 @@
 		</javaTypeResolver>
 
 		<!-- targetProject:生成PO类的位置 -->
-		<javaModelGenerator targetPackage="test.po"
+		<javaModelGenerator targetPackage="com.lagou.vo"
 			targetProject=".\src\main\java">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
@@ -35,22 +35,40 @@
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
         <!-- targetProject:mapper映射文件生成的位置 -->
-		<sqlMapGenerator targetPackage="test.mapper" 
+		<sqlMapGenerator targetPackage="com.lagou.dao" 
 			targetProject=".\src\main\java">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 		<!-- targetPackage：mapper接口生成的位置 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="test.mapper" 
+			targetPackage="com.lagou.dao" 
 			targetProject=".\src\main\java">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<!-- 指定数据库表 -->
-		<table schema="" tableName="user"></table>
-		<table schema="" tableName="skill"></table>
+		<table schema="" tableName="activity"></table>
+		<table schema="" tableName="authenticate"></table>
+		<table schema="" tableName="collectjob"></table>
+		<table schema="" tableName="company"></table>
+		<table schema="" tableName="companynews"></table>
+		<table schema="" tableName="hotsearch"></table>
+		<table schema="" tableName="industryfield"></table>
+		<table schema="" tableName="investor"></table>
+		<table schema="" tableName="job"></table>
+		<table schema="" tableName="label"></table>
+		<table schema="" tableName="leader"></table>
+		<table schema="" tableName="product"></table>
+		<table schema="" tableName="rcmdco"></table>
+		<table schema="" tableName="receiveresume"></table>
+		<table schema="" tableName="recruitservice"></table>
 		<table schema="" tableName="resume"></table>
+		<table schema="" tableName="skill"></table>
+		<table schema="" tableName="skillchildtype"></table>
+		<table schema="" tableName="skilltype"></table>
+		<table schema="" tableName="subscribejob"></table>
+		<table schema="" tableName="user"></table>
 		
 		<!-- 有些表的字段需要指定java类型
 		 <table schema="" tableName="">

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Product">
+    <id column="productId" jdbcType="INTEGER" property="productid" />
+    <result column="productName" jdbcType="VARCHAR" property="productname" />
+    <result column="productUrl" jdbcType="VARCHAR" property="producturl" />
+    <result column="productProfile" jdbcType="VARCHAR" property="productprofile" />
+    <result column="productPoster" jdbcType="VARCHAR" property="productposter" />
+    <result column="companyId" jdbcType="INTEGER" property="companyid" />
+    <result column="productDelStatus" jdbcType="INTEGER" property="productdelstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    productId, productName, productUrl, productProfile, productPoster, companyId, productDelStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where productId = #{productid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product
+    where productId = #{productid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.ProductExample">
+    delete from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Product">
+    insert into product (productId, productName, productUrl, 
+      productProfile, productPoster, companyId, 
+      productDelStatus)
+    values (#{productid,jdbcType=INTEGER}, #{productname,jdbcType=VARCHAR}, #{producturl,jdbcType=VARCHAR}, 
+      #{productprofile,jdbcType=VARCHAR}, #{productposter,jdbcType=VARCHAR}, #{companyid,jdbcType=INTEGER}, 
+      #{productdelstatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Product">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productid != null">
+        productId,
+      </if>
+      <if test="productname != null">
+        productName,
+      </if>
+      <if test="producturl != null">
+        productUrl,
+      </if>
+      <if test="productprofile != null">
+        productProfile,
+      </if>
+      <if test="productposter != null">
+        productPoster,
+      </if>
+      <if test="companyid != null">
+        companyId,
+      </if>
+      <if test="productdelstatus != null">
+        productDelStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="productname != null">
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="producturl != null">
+        #{producturl,jdbcType=VARCHAR},
+      </if>
+      <if test="productprofile != null">
+        #{productprofile,jdbcType=VARCHAR},
+      </if>
+      <if test="productposter != null">
+        #{productposter,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="productdelstatus != null">
+        #{productdelstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.ProductExample" resultType="java.lang.Long">
+    select count(*) from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update product
+    <set>
+      <if test="record.productid != null">
+        productId = #{record.productid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productname != null">
+        productName = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producturl != null">
+        productUrl = #{record.producturl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productprofile != null">
+        productProfile = #{record.productprofile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productposter != null">
+        productPoster = #{record.productposter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyid != null">
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productdelstatus != null">
+        productDelStatus = #{record.productdelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update product
+    set productId = #{record.productid,jdbcType=INTEGER},
+      productName = #{record.productname,jdbcType=VARCHAR},
+      productUrl = #{record.producturl,jdbcType=VARCHAR},
+      productProfile = #{record.productprofile,jdbcType=VARCHAR},
+      productPoster = #{record.productposter,jdbcType=VARCHAR},
+      companyId = #{record.companyid,jdbcType=INTEGER},
+      productDelStatus = #{record.productdelstatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Product">
+    update product
+    <set>
+      <if test="productname != null">
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="producturl != null">
+        productUrl = #{producturl,jdbcType=VARCHAR},
+      </if>
+      <if test="productprofile != null">
+        productProfile = #{productprofile,jdbcType=VARCHAR},
+      </if>
+      <if test="productposter != null">
+        productPoster = #{productposter,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null">
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="productdelstatus != null">
+        productDelStatus = #{productdelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where productId = #{productid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Product">
+    update product
+    set productName = #{productname,jdbcType=VARCHAR},
+      productUrl = #{producturl,jdbcType=VARCHAR},
+      productProfile = #{productprofile,jdbcType=VARCHAR},
+      productPoster = #{productposter,jdbcType=VARCHAR},
+      companyId = #{companyid,jdbcType=INTEGER},
+      productDelStatus = #{productdelstatus,jdbcType=INTEGER}
+    where productId = #{productid,jdbcType=INTEGER}
+  </update>
+</mapper>

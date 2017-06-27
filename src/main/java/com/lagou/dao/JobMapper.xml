@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.JobMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Job">
+    <id column="jobId" jdbcType="INTEGER" property="jobid" />
+    <result column="jobName" jdbcType="VARCHAR" property="jobname" />
+    <result column="jobDepartment" jdbcType="VARCHAR" property="jobdepartment" />
+    <result column="jobWorkingProperty" jdbcType="VARCHAR" property="jobworkingproperty" />
+    <result column="jobMinSalary" jdbcType="INTEGER" property="jobminsalary" />
+    <result column="jobMaxSalary" jdbcType="INTEGER" property="jobmaxsalary" />
+    <result column="jobWorkCity" jdbcType="VARCHAR" property="jobworkcity" />
+    <result column="jobExperience" jdbcType="VARCHAR" property="jobexperience" />
+    <result column="jobDegreeRequired" jdbcType="VARCHAR" property="jobdegreerequired" />
+    <result column="jobTempt" jdbcType="VARCHAR" property="jobtempt" />
+    <result column="jobDescribe" jdbcType="VARCHAR" property="jobdescribe" />
+    <result column="jobAddress" jdbcType="VARCHAR" property="jobaddress" />
+    <result column="jobEmail" jdbcType="VARCHAR" property="jobemail" />
+    <result column="jobTime" jdbcType="TIMESTAMP" property="jobtime" />
+    <result column="jobClick" jdbcType="INTEGER" property="jobclick" />
+    <result column="jobState" jdbcType="INTEGER" property="jobstate" />
+    <result column="skillId" jdbcType="INTEGER" property="skillid" />
+    <result column="companyId" jdbcType="INTEGER" property="companyid" />
+    <result column="jobDelStatus" jdbcType="INTEGER" property="jobdelstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    jobId, jobName, jobDepartment, jobWorkingProperty, jobMinSalary, jobMaxSalary, jobWorkCity, 
+    jobExperience, jobDegreeRequired, jobTempt, jobDescribe, jobAddress, jobEmail, jobTime, 
+    jobClick, jobState, skillId, companyId, jobDelStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.JobExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job
+    where jobId = #{jobid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job
+    where jobId = #{jobid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.JobExample">
+    delete from job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Job">
+    insert into job (jobId, jobName, jobDepartment, 
+      jobWorkingProperty, jobMinSalary, jobMaxSalary, 
+      jobWorkCity, jobExperience, jobDegreeRequired, 
+      jobTempt, jobDescribe, jobAddress, 
+      jobEmail, jobTime, jobClick, 
+      jobState, skillId, companyId, 
+      jobDelStatus)
+    values (#{jobid,jdbcType=INTEGER}, #{jobname,jdbcType=VARCHAR}, #{jobdepartment,jdbcType=VARCHAR}, 
+      #{jobworkingproperty,jdbcType=VARCHAR}, #{jobminsalary,jdbcType=INTEGER}, #{jobmaxsalary,jdbcType=INTEGER}, 
+      #{jobworkcity,jdbcType=VARCHAR}, #{jobexperience,jdbcType=VARCHAR}, #{jobdegreerequired,jdbcType=VARCHAR}, 
+      #{jobtempt,jdbcType=VARCHAR}, #{jobdescribe,jdbcType=VARCHAR}, #{jobaddress,jdbcType=VARCHAR}, 
+      #{jobemail,jdbcType=VARCHAR}, #{jobtime,jdbcType=TIMESTAMP}, #{jobclick,jdbcType=INTEGER}, 
+      #{jobstate,jdbcType=INTEGER}, #{skillid,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, 
+      #{jobdelstatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Job">
+    insert into job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobid != null">
+        jobId,
+      </if>
+      <if test="jobname != null">
+        jobName,
+      </if>
+      <if test="jobdepartment != null">
+        jobDepartment,
+      </if>
+      <if test="jobworkingproperty != null">
+        jobWorkingProperty,
+      </if>
+      <if test="jobminsalary != null">
+        jobMinSalary,
+      </if>
+      <if test="jobmaxsalary != null">
+        jobMaxSalary,
+      </if>
+      <if test="jobworkcity != null">
+        jobWorkCity,
+      </if>
+      <if test="jobexperience != null">
+        jobExperience,
+      </if>
+      <if test="jobdegreerequired != null">
+        jobDegreeRequired,
+      </if>
+      <if test="jobtempt != null">
+        jobTempt,
+      </if>
+      <if test="jobdescribe != null">
+        jobDescribe,
+      </if>
+      <if test="jobaddress != null">
+        jobAddress,
+      </if>
+      <if test="jobemail != null">
+        jobEmail,
+      </if>
+      <if test="jobtime != null">
+        jobTime,
+      </if>
+      <if test="jobclick != null">
+        jobClick,
+      </if>
+      <if test="jobstate != null">
+        jobState,
+      </if>
+      <if test="skillid != null">
+        skillId,
+      </if>
+      <if test="companyid != null">
+        companyId,
+      </if>
+      <if test="jobdelstatus != null">
+        jobDelStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobid != null">
+        #{jobid,jdbcType=INTEGER},
+      </if>
+      <if test="jobname != null">
+        #{jobname,jdbcType=VARCHAR},
+      </if>
+      <if test="jobdepartment != null">
+        #{jobdepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="jobworkingproperty != null">
+        #{jobworkingproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="jobminsalary != null">
+        #{jobminsalary,jdbcType=INTEGER},
+      </if>
+      <if test="jobmaxsalary != null">
+        #{jobmaxsalary,jdbcType=INTEGER},
+      </if>
+      <if test="jobworkcity != null">
+        #{jobworkcity,jdbcType=VARCHAR},
+      </if>
+      <if test="jobexperience != null">
+        #{jobexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="jobdegreerequired != null">
+        #{jobdegreerequired,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtempt != null">
+        #{jobtempt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobdescribe != null">
+        #{jobdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="jobaddress != null">
+        #{jobaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="jobemail != null">
+        #{jobemail,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtime != null">
+        #{jobtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobclick != null">
+        #{jobclick,jdbcType=INTEGER},
+      </if>
+      <if test="jobstate != null">
+        #{jobstate,jdbcType=INTEGER},
+      </if>
+      <if test="skillid != null">
+        #{skillid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="jobdelstatus != null">
+        #{jobdelstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.JobExample" resultType="java.lang.Long">
+    select count(*) from job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update job
+    <set>
+      <if test="record.jobid != null">
+        jobId = #{record.jobid,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobname != null">
+        jobName = #{record.jobname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobdepartment != null">
+        jobDepartment = #{record.jobdepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobworkingproperty != null">
+        jobWorkingProperty = #{record.jobworkingproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobminsalary != null">
+        jobMinSalary = #{record.jobminsalary,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobmaxsalary != null">
+        jobMaxSalary = #{record.jobmaxsalary,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobworkcity != null">
+        jobWorkCity = #{record.jobworkcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobexperience != null">
+        jobExperience = #{record.jobexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobdegreerequired != null">
+        jobDegreeRequired = #{record.jobdegreerequired,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtempt != null">
+        jobTempt = #{record.jobtempt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobdescribe != null">
+        jobDescribe = #{record.jobdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobaddress != null">
+        jobAddress = #{record.jobaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobemail != null">
+        jobEmail = #{record.jobemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtime != null">
+        jobTime = #{record.jobtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jobclick != null">
+        jobClick = #{record.jobclick,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobstate != null">
+        jobState = #{record.jobstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.skillid != null">
+        skillId = #{record.skillid,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyid != null">
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobdelstatus != null">
+        jobDelStatus = #{record.jobdelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update job
+    set jobId = #{record.jobid,jdbcType=INTEGER},
+      jobName = #{record.jobname,jdbcType=VARCHAR},
+      jobDepartment = #{record.jobdepartment,jdbcType=VARCHAR},
+      jobWorkingProperty = #{record.jobworkingproperty,jdbcType=VARCHAR},
+      jobMinSalary = #{record.jobminsalary,jdbcType=INTEGER},
+      jobMaxSalary = #{record.jobmaxsalary,jdbcType=INTEGER},
+      jobWorkCity = #{record.jobworkcity,jdbcType=VARCHAR},
+      jobExperience = #{record.jobexperience,jdbcType=VARCHAR},
+      jobDegreeRequired = #{record.jobdegreerequired,jdbcType=VARCHAR},
+      jobTempt = #{record.jobtempt,jdbcType=VARCHAR},
+      jobDescribe = #{record.jobdescribe,jdbcType=VARCHAR},
+      jobAddress = #{record.jobaddress,jdbcType=VARCHAR},
+      jobEmail = #{record.jobemail,jdbcType=VARCHAR},
+      jobTime = #{record.jobtime,jdbcType=TIMESTAMP},
+      jobClick = #{record.jobclick,jdbcType=INTEGER},
+      jobState = #{record.jobstate,jdbcType=INTEGER},
+      skillId = #{record.skillid,jdbcType=INTEGER},
+      companyId = #{record.companyid,jdbcType=INTEGER},
+      jobDelStatus = #{record.jobdelstatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Job">
+    update job
+    <set>
+      <if test="jobname != null">
+        jobName = #{jobname,jdbcType=VARCHAR},
+      </if>
+      <if test="jobdepartment != null">
+        jobDepartment = #{jobdepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="jobworkingproperty != null">
+        jobWorkingProperty = #{jobworkingproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="jobminsalary != null">
+        jobMinSalary = #{jobminsalary,jdbcType=INTEGER},
+      </if>
+      <if test="jobmaxsalary != null">
+        jobMaxSalary = #{jobmaxsalary,jdbcType=INTEGER},
+      </if>
+      <if test="jobworkcity != null">
+        jobWorkCity = #{jobworkcity,jdbcType=VARCHAR},
+      </if>
+      <if test="jobexperience != null">
+        jobExperience = #{jobexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="jobdegreerequired != null">
+        jobDegreeRequired = #{jobdegreerequired,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtempt != null">
+        jobTempt = #{jobtempt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobdescribe != null">
+        jobDescribe = #{jobdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="jobaddress != null">
+        jobAddress = #{jobaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="jobemail != null">
+        jobEmail = #{jobemail,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtime != null">
+        jobTime = #{jobtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobclick != null">
+        jobClick = #{jobclick,jdbcType=INTEGER},
+      </if>
+      <if test="jobstate != null">
+        jobState = #{jobstate,jdbcType=INTEGER},
+      </if>
+      <if test="skillid != null">
+        skillId = #{skillid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null">
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="jobdelstatus != null">
+        jobDelStatus = #{jobdelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where jobId = #{jobid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Job">
+    update job
+    set jobName = #{jobname,jdbcType=VARCHAR},
+      jobDepartment = #{jobdepartment,jdbcType=VARCHAR},
+      jobWorkingProperty = #{jobworkingproperty,jdbcType=VARCHAR},
+      jobMinSalary = #{jobminsalary,jdbcType=INTEGER},
+      jobMaxSalary = #{jobmaxsalary,jdbcType=INTEGER},
+      jobWorkCity = #{jobworkcity,jdbcType=VARCHAR},
+      jobExperience = #{jobexperience,jdbcType=VARCHAR},
+      jobDegreeRequired = #{jobdegreerequired,jdbcType=VARCHAR},
+      jobTempt = #{jobtempt,jdbcType=VARCHAR},
+      jobDescribe = #{jobdescribe,jdbcType=VARCHAR},
+      jobAddress = #{jobaddress,jdbcType=VARCHAR},
+      jobEmail = #{jobemail,jdbcType=VARCHAR},
+      jobTime = #{jobtime,jdbcType=TIMESTAMP},
+      jobClick = #{jobclick,jdbcType=INTEGER},
+      jobState = #{jobstate,jdbcType=INTEGER},
+      skillId = #{skillid,jdbcType=INTEGER},
+      companyId = #{companyid,jdbcType=INTEGER},
+      jobDelStatus = #{jobdelstatus,jdbcType=INTEGER}
+    where jobId = #{jobid,jdbcType=INTEGER}
+  </update>
+</mapper>

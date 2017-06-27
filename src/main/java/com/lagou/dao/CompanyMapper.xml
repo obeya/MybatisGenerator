@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Company">
+    <id column="companyId" jdbcType="INTEGER" property="companyid" />
+    <result column="coFullName" jdbcType="VARCHAR" property="cofullname" />
+    <result column="coPassword" jdbcType="VARCHAR" property="copassword" />
+    <result column="coSalt" jdbcType="VARCHAR" property="cosalt" />
+    <result column="coAbbrName" jdbcType="VARCHAR" property="coabbrname" />
+    <result column="coEmail" jdbcType="VARCHAR" property="coemail" />
+    <result column="coWebsite" jdbcType="VARCHAR" property="cowebsite" />
+    <result column="coCity" jdbcType="VARCHAR" property="cocity" />
+    <result column="coIndustryField" jdbcType="VARCHAR" property="coindustryfield" />
+    <result column="coCompanySize" jdbcType="VARCHAR" property="cocompanysize" />
+    <result column="coPhase" jdbcType="VARCHAR" property="cophase" />
+    <result column="coTemptation" jdbcType="VARCHAR" property="cotemptation" />
+    <result column="coLOGO" jdbcType="VARCHAR" property="cologo" />
+    <result column="coProfile" jdbcType="VARCHAR" property="coprofile" />
+    <result column="coState" jdbcType="INTEGER" property="costate" />
+    <result column="coCode" jdbcType="VARCHAR" property="cocode" />
+    <result column="industryFieldId" jdbcType="INTEGER" property="industryfieldid" />
+    <result column="coDelStatus" jdbcType="INTEGER" property="codelstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    companyId, coFullName, coPassword, coSalt, coAbbrName, coEmail, coWebsite, coCity, 
+    coIndustryField, coCompanySize, coPhase, coTemptation, coLOGO, coProfile, coState, 
+    coCode, industryFieldId, coDelStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.CompanyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company
+    where companyId = #{companyid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from company
+    where companyId = #{companyid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.CompanyExample">
+    delete from company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Company">
+    insert into company (companyId, coFullName, coPassword, 
+      coSalt, coAbbrName, coEmail, 
+      coWebsite, coCity, coIndustryField, 
+      coCompanySize, coPhase, coTemptation, 
+      coLOGO, coProfile, coState, 
+      coCode, industryFieldId, coDelStatus
+      )
+    values (#{companyid,jdbcType=INTEGER}, #{cofullname,jdbcType=VARCHAR}, #{copassword,jdbcType=VARCHAR}, 
+      #{cosalt,jdbcType=VARCHAR}, #{coabbrname,jdbcType=VARCHAR}, #{coemail,jdbcType=VARCHAR}, 
+      #{cowebsite,jdbcType=VARCHAR}, #{cocity,jdbcType=VARCHAR}, #{coindustryfield,jdbcType=VARCHAR}, 
+      #{cocompanysize,jdbcType=VARCHAR}, #{cophase,jdbcType=VARCHAR}, #{cotemptation,jdbcType=VARCHAR}, 
+      #{cologo,jdbcType=VARCHAR}, #{coprofile,jdbcType=VARCHAR}, #{costate,jdbcType=INTEGER}, 
+      #{cocode,jdbcType=VARCHAR}, #{industryfieldid,jdbcType=INTEGER}, #{codelstatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Company">
+    insert into company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        companyId,
+      </if>
+      <if test="cofullname != null">
+        coFullName,
+      </if>
+      <if test="copassword != null">
+        coPassword,
+      </if>
+      <if test="cosalt != null">
+        coSalt,
+      </if>
+      <if test="coabbrname != null">
+        coAbbrName,
+      </if>
+      <if test="coemail != null">
+        coEmail,
+      </if>
+      <if test="cowebsite != null">
+        coWebsite,
+      </if>
+      <if test="cocity != null">
+        coCity,
+      </if>
+      <if test="coindustryfield != null">
+        coIndustryField,
+      </if>
+      <if test="cocompanysize != null">
+        coCompanySize,
+      </if>
+      <if test="cophase != null">
+        coPhase,
+      </if>
+      <if test="cotemptation != null">
+        coTemptation,
+      </if>
+      <if test="cologo != null">
+        coLOGO,
+      </if>
+      <if test="coprofile != null">
+        coProfile,
+      </if>
+      <if test="costate != null">
+        coState,
+      </if>
+      <if test="cocode != null">
+        coCode,
+      </if>
+      <if test="industryfieldid != null">
+        industryFieldId,
+      </if>
+      <if test="codelstatus != null">
+        coDelStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="cofullname != null">
+        #{cofullname,jdbcType=VARCHAR},
+      </if>
+      <if test="copassword != null">
+        #{copassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cosalt != null">
+        #{cosalt,jdbcType=VARCHAR},
+      </if>
+      <if test="coabbrname != null">
+        #{coabbrname,jdbcType=VARCHAR},
+      </if>
+      <if test="coemail != null">
+        #{coemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cowebsite != null">
+        #{cowebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="cocity != null">
+        #{cocity,jdbcType=VARCHAR},
+      </if>
+      <if test="coindustryfield != null">
+        #{coindustryfield,jdbcType=VARCHAR},
+      </if>
+      <if test="cocompanysize != null">
+        #{cocompanysize,jdbcType=VARCHAR},
+      </if>
+      <if test="cophase != null">
+        #{cophase,jdbcType=VARCHAR},
+      </if>
+      <if test="cotemptation != null">
+        #{cotemptation,jdbcType=VARCHAR},
+      </if>
+      <if test="cologo != null">
+        #{cologo,jdbcType=VARCHAR},
+      </if>
+      <if test="coprofile != null">
+        #{coprofile,jdbcType=VARCHAR},
+      </if>
+      <if test="costate != null">
+        #{costate,jdbcType=INTEGER},
+      </if>
+      <if test="cocode != null">
+        #{cocode,jdbcType=VARCHAR},
+      </if>
+      <if test="industryfieldid != null">
+        #{industryfieldid,jdbcType=INTEGER},
+      </if>
+      <if test="codelstatus != null">
+        #{codelstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.CompanyExample" resultType="java.lang.Long">
+    select count(*) from company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update company
+    <set>
+      <if test="record.companyid != null">
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cofullname != null">
+        coFullName = #{record.cofullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.copassword != null">
+        coPassword = #{record.copassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cosalt != null">
+        coSalt = #{record.cosalt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coabbrname != null">
+        coAbbrName = #{record.coabbrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coemail != null">
+        coEmail = #{record.coemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cowebsite != null">
+        coWebsite = #{record.cowebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cocity != null">
+        coCity = #{record.cocity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coindustryfield != null">
+        coIndustryField = #{record.coindustryfield,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cocompanysize != null">
+        coCompanySize = #{record.cocompanysize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cophase != null">
+        coPhase = #{record.cophase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cotemptation != null">
+        coTemptation = #{record.cotemptation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cologo != null">
+        coLOGO = #{record.cologo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coprofile != null">
+        coProfile = #{record.coprofile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costate != null">
+        coState = #{record.costate,jdbcType=INTEGER},
+      </if>
+      <if test="record.cocode != null">
+        coCode = #{record.cocode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryfieldid != null">
+        industryFieldId = #{record.industryfieldid,jdbcType=INTEGER},
+      </if>
+      <if test="record.codelstatus != null">
+        coDelStatus = #{record.codelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update company
+    set companyId = #{record.companyid,jdbcType=INTEGER},
+      coFullName = #{record.cofullname,jdbcType=VARCHAR},
+      coPassword = #{record.copassword,jdbcType=VARCHAR},
+      coSalt = #{record.cosalt,jdbcType=VARCHAR},
+      coAbbrName = #{record.coabbrname,jdbcType=VARCHAR},
+      coEmail = #{record.coemail,jdbcType=VARCHAR},
+      coWebsite = #{record.cowebsite,jdbcType=VARCHAR},
+      coCity = #{record.cocity,jdbcType=VARCHAR},
+      coIndustryField = #{record.coindustryfield,jdbcType=VARCHAR},
+      coCompanySize = #{record.cocompanysize,jdbcType=VARCHAR},
+      coPhase = #{record.cophase,jdbcType=VARCHAR},
+      coTemptation = #{record.cotemptation,jdbcType=VARCHAR},
+      coLOGO = #{record.cologo,jdbcType=VARCHAR},
+      coProfile = #{record.coprofile,jdbcType=VARCHAR},
+      coState = #{record.costate,jdbcType=INTEGER},
+      coCode = #{record.cocode,jdbcType=VARCHAR},
+      industryFieldId = #{record.industryfieldid,jdbcType=INTEGER},
+      coDelStatus = #{record.codelstatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Company">
+    update company
+    <set>
+      <if test="cofullname != null">
+        coFullName = #{cofullname,jdbcType=VARCHAR},
+      </if>
+      <if test="copassword != null">
+        coPassword = #{copassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cosalt != null">
+        coSalt = #{cosalt,jdbcType=VARCHAR},
+      </if>
+      <if test="coabbrname != null">
+        coAbbrName = #{coabbrname,jdbcType=VARCHAR},
+      </if>
+      <if test="coemail != null">
+        coEmail = #{coemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cowebsite != null">
+        coWebsite = #{cowebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="cocity != null">
+        coCity = #{cocity,jdbcType=VARCHAR},
+      </if>
+      <if test="coindustryfield != null">
+        coIndustryField = #{coindustryfield,jdbcType=VARCHAR},
+      </if>
+      <if test="cocompanysize != null">
+        coCompanySize = #{cocompanysize,jdbcType=VARCHAR},
+      </if>
+      <if test="cophase != null">
+        coPhase = #{cophase,jdbcType=VARCHAR},
+      </if>
+      <if test="cotemptation != null">
+        coTemptation = #{cotemptation,jdbcType=VARCHAR},
+      </if>
+      <if test="cologo != null">
+        coLOGO = #{cologo,jdbcType=VARCHAR},
+      </if>
+      <if test="coprofile != null">
+        coProfile = #{coprofile,jdbcType=VARCHAR},
+      </if>
+      <if test="costate != null">
+        coState = #{costate,jdbcType=INTEGER},
+      </if>
+      <if test="cocode != null">
+        coCode = #{cocode,jdbcType=VARCHAR},
+      </if>
+      <if test="industryfieldid != null">
+        industryFieldId = #{industryfieldid,jdbcType=INTEGER},
+      </if>
+      <if test="codelstatus != null">
+        coDelStatus = #{codelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where companyId = #{companyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Company">
+    update company
+    set coFullName = #{cofullname,jdbcType=VARCHAR},
+      coPassword = #{copassword,jdbcType=VARCHAR},
+      coSalt = #{cosalt,jdbcType=VARCHAR},
+      coAbbrName = #{coabbrname,jdbcType=VARCHAR},
+      coEmail = #{coemail,jdbcType=VARCHAR},
+      coWebsite = #{cowebsite,jdbcType=VARCHAR},
+      coCity = #{cocity,jdbcType=VARCHAR},
+      coIndustryField = #{coindustryfield,jdbcType=VARCHAR},
+      coCompanySize = #{cocompanysize,jdbcType=VARCHAR},
+      coPhase = #{cophase,jdbcType=VARCHAR},
+      coTemptation = #{cotemptation,jdbcType=VARCHAR},
+      coLOGO = #{cologo,jdbcType=VARCHAR},
+      coProfile = #{coprofile,jdbcType=VARCHAR},
+      coState = #{costate,jdbcType=INTEGER},
+      coCode = #{cocode,jdbcType=VARCHAR},
+      industryFieldId = #{industryfieldid,jdbcType=INTEGER},
+      coDelStatus = #{codelstatus,jdbcType=INTEGER}
+    where companyId = #{companyid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.CompanynewsMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Companynews">
+    <id column="coNewsId" jdbcType="INTEGER" property="conewsid" />
+    <result column="coNewsTitle" jdbcType="VARCHAR" property="conewstitle" />
+    <result column="coNewsLink" jdbcType="VARCHAR" property="conewslink" />
+    <result column="companyId" jdbcType="INTEGER" property="companyid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    coNewsId, coNewsTitle, coNewsLink, companyId
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.CompanynewsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from companynews
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from companynews
+    where coNewsId = #{conewsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from companynews
+    where coNewsId = #{conewsid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.CompanynewsExample">
+    delete from companynews
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Companynews">
+    insert into companynews (coNewsId, coNewsTitle, coNewsLink, 
+      companyId)
+    values (#{conewsid,jdbcType=INTEGER}, #{conewstitle,jdbcType=VARCHAR}, #{conewslink,jdbcType=VARCHAR}, 
+      #{companyid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Companynews">
+    insert into companynews
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="conewsid != null">
+        coNewsId,
+      </if>
+      <if test="conewstitle != null">
+        coNewsTitle,
+      </if>
+      <if test="conewslink != null">
+        coNewsLink,
+      </if>
+      <if test="companyid != null">
+        companyId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="conewsid != null">
+        #{conewsid,jdbcType=INTEGER},
+      </if>
+      <if test="conewstitle != null">
+        #{conewstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="conewslink != null">
+        #{conewslink,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.CompanynewsExample" resultType="java.lang.Long">
+    select count(*) from companynews
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update companynews
+    <set>
+      <if test="record.conewsid != null">
+        coNewsId = #{record.conewsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.conewstitle != null">
+        coNewsTitle = #{record.conewstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conewslink != null">
+        coNewsLink = #{record.conewslink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyid != null">
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update companynews
+    set coNewsId = #{record.conewsid,jdbcType=INTEGER},
+      coNewsTitle = #{record.conewstitle,jdbcType=VARCHAR},
+      coNewsLink = #{record.conewslink,jdbcType=VARCHAR},
+      companyId = #{record.companyid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Companynews">
+    update companynews
+    <set>
+      <if test="conewstitle != null">
+        coNewsTitle = #{conewstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="conewslink != null">
+        coNewsLink = #{conewslink,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null">
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where coNewsId = #{conewsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Companynews">
+    update companynews
+    set coNewsTitle = #{conewstitle,jdbcType=VARCHAR},
+      coNewsLink = #{conewslink,jdbcType=VARCHAR},
+      companyId = #{companyid,jdbcType=INTEGER}
+    where coNewsId = #{conewsid,jdbcType=INTEGER}
+  </update>
+</mapper>

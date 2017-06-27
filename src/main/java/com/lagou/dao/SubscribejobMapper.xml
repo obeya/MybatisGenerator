@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.SubscribejobMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Subscribejob">
+    <id column="subscribeId" jdbcType="INTEGER" property="subscribeid" />
+    <result column="sEmail" jdbcType="VARCHAR" property="semail" />
+    <result column="sCycle" jdbcType="VARCHAR" property="scycle" />
+    <result column="sJobName" jdbcType="VARCHAR" property="sjobname" />
+    <result column="sJobWorkCity" jdbcType="VARCHAR" property="sjobworkcity" />
+    <result column="sSalary" jdbcType="VARCHAR" property="ssalary" />
+    <result column="subscribeDelStatus" jdbcType="INTEGER" property="subscribedelstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    subscribeId, sEmail, sCycle, sJobName, sJobWorkCity, sSalary, subscribeDelStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.SubscribejobExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subscribejob
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subscribejob
+    where subscribeId = #{subscribeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from subscribejob
+    where subscribeId = #{subscribeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.SubscribejobExample">
+    delete from subscribejob
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Subscribejob">
+    insert into subscribejob (subscribeId, sEmail, sCycle, 
+      sJobName, sJobWorkCity, sSalary, 
+      subscribeDelStatus)
+    values (#{subscribeid,jdbcType=INTEGER}, #{semail,jdbcType=VARCHAR}, #{scycle,jdbcType=VARCHAR}, 
+      #{sjobname,jdbcType=VARCHAR}, #{sjobworkcity,jdbcType=VARCHAR}, #{ssalary,jdbcType=VARCHAR}, 
+      #{subscribedelstatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Subscribejob">
+    insert into subscribejob
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subscribeid != null">
+        subscribeId,
+      </if>
+      <if test="semail != null">
+        sEmail,
+      </if>
+      <if test="scycle != null">
+        sCycle,
+      </if>
+      <if test="sjobname != null">
+        sJobName,
+      </if>
+      <if test="sjobworkcity != null">
+        sJobWorkCity,
+      </if>
+      <if test="ssalary != null">
+        sSalary,
+      </if>
+      <if test="subscribedelstatus != null">
+        subscribeDelStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subscribeid != null">
+        #{subscribeid,jdbcType=INTEGER},
+      </if>
+      <if test="semail != null">
+        #{semail,jdbcType=VARCHAR},
+      </if>
+      <if test="scycle != null">
+        #{scycle,jdbcType=VARCHAR},
+      </if>
+      <if test="sjobname != null">
+        #{sjobname,jdbcType=VARCHAR},
+      </if>
+      <if test="sjobworkcity != null">
+        #{sjobworkcity,jdbcType=VARCHAR},
+      </if>
+      <if test="ssalary != null">
+        #{ssalary,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribedelstatus != null">
+        #{subscribedelstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.SubscribejobExample" resultType="java.lang.Long">
+    select count(*) from subscribejob
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update subscribejob
+    <set>
+      <if test="record.subscribeid != null">
+        subscribeId = #{record.subscribeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.semail != null">
+        sEmail = #{record.semail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scycle != null">
+        sCycle = #{record.scycle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sjobname != null">
+        sJobName = #{record.sjobname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sjobworkcity != null">
+        sJobWorkCity = #{record.sjobworkcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssalary != null">
+        sSalary = #{record.ssalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subscribedelstatus != null">
+        subscribeDelStatus = #{record.subscribedelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update subscribejob
+    set subscribeId = #{record.subscribeid,jdbcType=INTEGER},
+      sEmail = #{record.semail,jdbcType=VARCHAR},
+      sCycle = #{record.scycle,jdbcType=VARCHAR},
+      sJobName = #{record.sjobname,jdbcType=VARCHAR},
+      sJobWorkCity = #{record.sjobworkcity,jdbcType=VARCHAR},
+      sSalary = #{record.ssalary,jdbcType=VARCHAR},
+      subscribeDelStatus = #{record.subscribedelstatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Subscribejob">
+    update subscribejob
+    <set>
+      <if test="semail != null">
+        sEmail = #{semail,jdbcType=VARCHAR},
+      </if>
+      <if test="scycle != null">
+        sCycle = #{scycle,jdbcType=VARCHAR},
+      </if>
+      <if test="sjobname != null">
+        sJobName = #{sjobname,jdbcType=VARCHAR},
+      </if>
+      <if test="sjobworkcity != null">
+        sJobWorkCity = #{sjobworkcity,jdbcType=VARCHAR},
+      </if>
+      <if test="ssalary != null">
+        sSalary = #{ssalary,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribedelstatus != null">
+        subscribeDelStatus = #{subscribedelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where subscribeId = #{subscribeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Subscribejob">
+    update subscribejob
+    set sEmail = #{semail,jdbcType=VARCHAR},
+      sCycle = #{scycle,jdbcType=VARCHAR},
+      sJobName = #{sjobname,jdbcType=VARCHAR},
+      sJobWorkCity = #{sjobworkcity,jdbcType=VARCHAR},
+      sSalary = #{ssalary,jdbcType=VARCHAR},
+      subscribeDelStatus = #{subscribedelstatus,jdbcType=INTEGER}
+    where subscribeId = #{subscribeid,jdbcType=INTEGER}
+  </update>
+</mapper>

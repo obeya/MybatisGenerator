@@ -11,7 +11,7 @@
 		</commentGenerator>
 		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/bank" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/lagou" userId="root"
 			password="okok">
 		</jdbcConnection>
 		<!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
@@ -48,8 +48,27 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<!-- 指定数据库表 -->
-		<table schema="" tableName="type"></table>
-		<table schema="" tableName="account"></table>
+		<table schema="" tableName="activity"></table>
+		<table schema="" tableName="authenticate"></table>
+		<table schema="" tableName="collectJob"></table>
+		<table schema="" tableName="company"></table>
+		<table schema="" tableName="companyNews"></table>
+		<table schema="" tableName="hotSearch"></table>
+		<table schema="" tableName="industryField"></table>
+		<table schema="" tableName="investor"></table>
+		<table schema="" tableName="job"></table>
+		<table schema="" tableName="label"></table>
+		<table schema="" tableName="leader"></table>
+		<table schema="" tableName="product"></table>
+		<table schema="" tableName="rcmdCo"></table>
+		<table schema="" tableName="receiveResume"></table>
+		<table schema="" tableName="recruitService"></table>
+		<table schema="" tableName="resume"></table>
+		<table schema="" tableName="skill"></table>
+		<table schema="" tableName="skillChildType"></table>
+		<table schema="" tableName="skillType"></table>
+		<table schema="" tableName="subscribeJob"></table>
+		<table schema="" tableName="user"></table>
 		
 		<!-- 有些表的字段需要指定java类型
 		 <table schema="" tableName="">

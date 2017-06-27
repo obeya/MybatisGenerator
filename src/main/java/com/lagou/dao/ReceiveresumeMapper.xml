@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.ReceiveresumeMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Receiveresume">
+    <id column="receiveResumeId" jdbcType="INTEGER" property="receiveresumeid" />
+    <result column="resumeState" jdbcType="INTEGER" property="resumestate" />
+    <result column="resumeId" jdbcType="INTEGER" property="resumeid" />
+    <result column="jobId" jdbcType="INTEGER" property="jobid" />
+    <result column="companyId" jdbcType="INTEGER" property="companyid" />
+    <result column="receiveDelStatus" jdbcType="INTEGER" property="receivedelstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    receiveResumeId, resumeState, resumeId, jobId, companyId, receiveDelStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.ReceiveresumeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from receiveresume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from receiveresume
+    where receiveResumeId = #{receiveresumeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from receiveresume
+    where receiveResumeId = #{receiveresumeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.ReceiveresumeExample">
+    delete from receiveresume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Receiveresume">
+    insert into receiveresume (receiveResumeId, resumeState, resumeId, 
+      jobId, companyId, receiveDelStatus
+      )
+    values (#{receiveresumeid,jdbcType=INTEGER}, #{resumestate,jdbcType=INTEGER}, #{resumeid,jdbcType=INTEGER}, 
+      #{jobid,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{receivedelstatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Receiveresume">
+    insert into receiveresume
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="receiveresumeid != null">
+        receiveResumeId,
+      </if>
+      <if test="resumestate != null">
+        resumeState,
+      </if>
+      <if test="resumeid != null">
+        resumeId,
+      </if>
+      <if test="jobid != null">
+        jobId,
+      </if>
+      <if test="companyid != null">
+        companyId,
+      </if>
+      <if test="receivedelstatus != null">
+        receiveDelStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="receiveresumeid != null">
+        #{receiveresumeid,jdbcType=INTEGER},
+      </if>
+      <if test="resumestate != null">
+        #{resumestate,jdbcType=INTEGER},
+      </if>
+      <if test="resumeid != null">
+        #{resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="jobid != null">
+        #{jobid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="receivedelstatus != null">
+        #{receivedelstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.ReceiveresumeExample" resultType="java.lang.Long">
+    select count(*) from receiveresume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update receiveresume
+    <set>
+      <if test="record.receiveresumeid != null">
+        receiveResumeId = #{record.receiveresumeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.resumestate != null">
+        resumeState = #{record.resumestate,jdbcType=INTEGER},
+      </if>
+      <if test="record.resumeid != null">
+        resumeId = #{record.resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobid != null">
+        jobId = #{record.jobid,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyid != null">
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.receivedelstatus != null">
+        receiveDelStatus = #{record.receivedelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update receiveresume
+    set receiveResumeId = #{record.receiveresumeid,jdbcType=INTEGER},
+      resumeState = #{record.resumestate,jdbcType=INTEGER},
+      resumeId = #{record.resumeid,jdbcType=INTEGER},
+      jobId = #{record.jobid,jdbcType=INTEGER},
+      companyId = #{record.companyid,jdbcType=INTEGER},
+      receiveDelStatus = #{record.receivedelstatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Receiveresume">
+    update receiveresume
+    <set>
+      <if test="resumestate != null">
+        resumeState = #{resumestate,jdbcType=INTEGER},
+      </if>
+      <if test="resumeid != null">
+        resumeId = #{resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="jobid != null">
+        jobId = #{jobid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null">
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="receivedelstatus != null">
+        receiveDelStatus = #{receivedelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where receiveResumeId = #{receiveresumeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Receiveresume">
+    update receiveresume
+    set resumeState = #{resumestate,jdbcType=INTEGER},
+      resumeId = #{resumeid,jdbcType=INTEGER},
+      jobId = #{jobid,jdbcType=INTEGER},
+      companyId = #{companyid,jdbcType=INTEGER},
+      receiveDelStatus = #{receivedelstatus,jdbcType=INTEGER}
+    where receiveResumeId = #{receiveresumeid,jdbcType=INTEGER}
+  </update>
+</mapper>

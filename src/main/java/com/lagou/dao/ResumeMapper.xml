@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.ResumeMapper">
+  <resultMap id="BaseResultMap" type="com.lagou.vo.Resume">
+    <id column="resumeId" jdbcType="INTEGER" property="resumeid" />
+    <result column="resumeName" jdbcType="VARCHAR" property="resumename" />
+    <result column="resumeGender" jdbcType="INTEGER" property="resumegender" />
+    <result column="resumeExperience" jdbcType="VARCHAR" property="resumeexperience" />
+    <result column="resumePhone" jdbcType="VARCHAR" property="resumephone" />
+    <result column="resumeEmail" jdbcType="VARCHAR" property="resumeemail" />
+    <result column="resumeCurrentState" jdbcType="VARCHAR" property="resumecurrentstate" />
+    <result column="resumeExpectCity" jdbcType="VARCHAR" property="resumeexpectcity" />
+    <result column="resumeWorkingProperty" jdbcType="VARCHAR" property="resumeworkingproperty" />
+    <result column="resumeExpectPosition" jdbcType="VARCHAR" property="resumeexpectposition" />
+    <result column="resumeExpectSalary" jdbcType="VARCHAR" property="resumeexpectsalary" />
+    <result column="resumeCompanyName" jdbcType="VARCHAR" property="resumecompanyname" />
+    <result column="resumePositionName" jdbcType="VARCHAR" property="resumepositionname" />
+    <result column="resumeWorkYearStart" jdbcType="VARCHAR" property="resumeworkyearstart" />
+    <result column="resumeWorkMonthStart" jdbcType="VARCHAR" property="resumeworkmonthstart" />
+    <result column="resumeWorkYearEnd" jdbcType="VARCHAR" property="resumeworkyearend" />
+    <result column="resumeWorkMonthEnd" jdbcType="VARCHAR" property="resumeworkmonthend" />
+    <result column="resumeProjectName" jdbcType="VARCHAR" property="resumeprojectname" />
+    <result column="resumeProjectPosition" jdbcType="VARCHAR" property="resumeprojectposition" />
+    <result column="resumeProjectYearStart" jdbcType="DATE" property="resumeprojectyearstart" />
+    <result column="resumeProjectYearEnd" jdbcType="DATE" property="resumeprojectyearend" />
+    <result column="resumeProjectMonthStart" jdbcType="DATE" property="resumeprojectmonthstart" />
+    <result column="resumeProjectMonthEnd" jdbcType="DATE" property="resumeprojectmonthend" />
+    <result column="resumeProjectDesc" jdbcType="VARCHAR" property="resumeprojectdesc" />
+    <result column="resumeSchoolName" jdbcType="VARCHAR" property="resumeschoolname" />
+    <result column="resumeDegree" jdbcType="VARCHAR" property="resumedegree" />
+    <result column="resumeProfessional" jdbcType="VARCHAR" property="resumeprofessional" />
+    <result column="resumeSchoolYearStart" jdbcType="DATE" property="resumeschoolyearstart" />
+    <result column="resumeSchoolYearEnd" jdbcType="DATE" property="resumeschoolyearend" />
+    <result column="resumeSelfDesc" jdbcType="VARCHAR" property="resumeselfdesc" />
+    <result column="resumeWorkLink" jdbcType="VARCHAR" property="resumeworklink" />
+    <result column="resumeWorkDesc" jdbcType="VARCHAR" property="resumeworkdesc" />
+    <result column="resumeLastUpdate" jdbcType="DATE" property="resumelastupdate" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="resumeDelStatus" jdbcType="INTEGER" property="resumedelstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    resumeId, resumeName, resumeGender, resumeExperience, resumePhone, resumeEmail, resumeCurrentState, 
+    resumeExpectCity, resumeWorkingProperty, resumeExpectPosition, resumeExpectSalary, 
+    resumeCompanyName, resumePositionName, resumeWorkYearStart, resumeWorkMonthStart, 
+    resumeWorkYearEnd, resumeWorkMonthEnd, resumeProjectName, resumeProjectPosition, 
+    resumeProjectYearStart, resumeProjectYearEnd, resumeProjectMonthStart, resumeProjectMonthEnd, 
+    resumeProjectDesc, resumeSchoolName, resumeDegree, resumeProfessional, resumeSchoolYearStart, 
+    resumeSchoolYearEnd, resumeSelfDesc, resumeWorkLink, resumeWorkDesc, resumeLastUpdate, 
+    userId, resumeDelStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.lagou.vo.ResumeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from resume
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from resume
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lagou.vo.ResumeExample">
+    delete from resume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lagou.vo.Resume">
+    insert into resume (resumeId, resumeName, resumeGender, 
+      resumeExperience, resumePhone, resumeEmail, 
+      resumeCurrentState, resumeExpectCity, resumeWorkingProperty, 
+      resumeExpectPosition, resumeExpectSalary, 
+      resumeCompanyName, resumePositionName, 
+      resumeWorkYearStart, resumeWorkMonthStart, 
+      resumeWorkYearEnd, resumeWorkMonthEnd, 
+      resumeProjectName, resumeProjectPosition, 
+      resumeProjectYearStart, resumeProjectYearEnd, 
+      resumeProjectMonthStart, resumeProjectMonthEnd, 
+      resumeProjectDesc, resumeSchoolName, resumeDegree, 
+      resumeProfessional, resumeSchoolYearStart, 
+      resumeSchoolYearEnd, resumeSelfDesc, resumeWorkLink, 
+      resumeWorkDesc, resumeLastUpdate, userId, 
+      resumeDelStatus)
+    values (#{resumeid,jdbcType=INTEGER}, #{resumename,jdbcType=VARCHAR}, #{resumegender,jdbcType=INTEGER}, 
+      #{resumeexperience,jdbcType=VARCHAR}, #{resumephone,jdbcType=VARCHAR}, #{resumeemail,jdbcType=VARCHAR}, 
+      #{resumecurrentstate,jdbcType=VARCHAR}, #{resumeexpectcity,jdbcType=VARCHAR}, #{resumeworkingproperty,jdbcType=VARCHAR}, 
+      #{resumeexpectposition,jdbcType=VARCHAR}, #{resumeexpectsalary,jdbcType=VARCHAR}, 
+      #{resumecompanyname,jdbcType=VARCHAR}, #{resumepositionname,jdbcType=VARCHAR}, 
+      #{resumeworkyearstart,jdbcType=VARCHAR}, #{resumeworkmonthstart,jdbcType=VARCHAR}, 
+      #{resumeworkyearend,jdbcType=VARCHAR}, #{resumeworkmonthend,jdbcType=VARCHAR}, 
+      #{resumeprojectname,jdbcType=VARCHAR}, #{resumeprojectposition,jdbcType=VARCHAR}, 
+      #{resumeprojectyearstart,jdbcType=DATE}, #{resumeprojectyearend,jdbcType=DATE}, 
+      #{resumeprojectmonthstart,jdbcType=DATE}, #{resumeprojectmonthend,jdbcType=DATE}, 
+      #{resumeprojectdesc,jdbcType=VARCHAR}, #{resumeschoolname,jdbcType=VARCHAR}, #{resumedegree,jdbcType=VARCHAR}, 
+      #{resumeprofessional,jdbcType=VARCHAR}, #{resumeschoolyearstart,jdbcType=DATE}, 
+      #{resumeschoolyearend,jdbcType=DATE}, #{resumeselfdesc,jdbcType=VARCHAR}, #{resumeworklink,jdbcType=VARCHAR}, 
+      #{resumeworkdesc,jdbcType=VARCHAR}, #{resumelastupdate,jdbcType=DATE}, #{userid,jdbcType=INTEGER}, 
+      #{resumedelstatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lagou.vo.Resume">
+    insert into resume
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="resumeid != null">
+        resumeId,
+      </if>
+      <if test="resumename != null">
+        resumeName,
+      </if>
+      <if test="resumegender != null">
+        resumeGender,
+      </if>
+      <if test="resumeexperience != null">
+        resumeExperience,
+      </if>
+      <if test="resumephone != null">
+        resumePhone,
+      </if>
+      <if test="resumeemail != null">
+        resumeEmail,
+      </if>
+      <if test="resumecurrentstate != null">
+        resumeCurrentState,
+      </if>
+      <if test="resumeexpectcity != null">
+        resumeExpectCity,
+      </if>
+      <if test="resumeworkingproperty != null">
+        resumeWorkingProperty,
+      </if>
+      <if test="resumeexpectposition != null">
+        resumeExpectPosition,
+      </if>
+      <if test="resumeexpectsalary != null">
+        resumeExpectSalary,
+      </if>
+      <if test="resumecompanyname != null">
+        resumeCompanyName,
+      </if>
+      <if test="resumepositionname != null">
+        resumePositionName,
+      </if>
+      <if test="resumeworkyearstart != null">
+        resumeWorkYearStart,
+      </if>
+      <if test="resumeworkmonthstart != null">
+        resumeWorkMonthStart,
+      </if>
+      <if test="resumeworkyearend != null">
+        resumeWorkYearEnd,
+      </if>
+      <if test="resumeworkmonthend != null">
+        resumeWorkMonthEnd,
+      </if>
+      <if test="resumeprojectname != null">
+        resumeProjectName,
+      </if>
+      <if test="resumeprojectposition != null">
+        resumeProjectPosition,
+      </if>
+      <if test="resumeprojectyearstart != null">
+        resumeProjectYearStart,
+      </if>
+      <if test="resumeprojectyearend != null">
+        resumeProjectYearEnd,
+      </if>
+      <if test="resumeprojectmonthstart != null">
+        resumeProjectMonthStart,
+      </if>
+      <if test="resumeprojectmonthend != null">
+        resumeProjectMonthEnd,
+      </if>
+      <if test="resumeprojectdesc != null">
+        resumeProjectDesc,
+      </if>
+      <if test="resumeschoolname != null">
+        resumeSchoolName,
+      </if>
+      <if test="resumedegree != null">
+        resumeDegree,
+      </if>
+      <if test="resumeprofessional != null">
+        resumeProfessional,
+      </if>
+      <if test="resumeschoolyearstart != null">
+        resumeSchoolYearStart,
+      </if>
+      <if test="resumeschoolyearend != null">
+        resumeSchoolYearEnd,
+      </if>
+      <if test="resumeselfdesc != null">
+        resumeSelfDesc,
+      </if>
+      <if test="resumeworklink != null">
+        resumeWorkLink,
+      </if>
+      <if test="resumeworkdesc != null">
+        resumeWorkDesc,
+      </if>
+      <if test="resumelastupdate != null">
+        resumeLastUpdate,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="resumedelstatus != null">
+        resumeDelStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="resumeid != null">
+        #{resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="resumename != null">
+        #{resumename,jdbcType=VARCHAR},
+      </if>
+      <if test="resumegender != null">
+        #{resumegender,jdbcType=INTEGER},
+      </if>
+      <if test="resumeexperience != null">
+        #{resumeexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumephone != null">
+        #{resumephone,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeemail != null">
+        #{resumeemail,jdbcType=VARCHAR},
+      </if>
+      <if test="resumecurrentstate != null">
+        #{resumecurrentstate,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeexpectcity != null">
+        #{resumeexpectcity,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkingproperty != null">
+        #{resumeworkingproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeexpectposition != null">
+        #{resumeexpectposition,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeexpectsalary != null">
+        #{resumeexpectsalary,jdbcType=VARCHAR},
+      </if>
+      <if test="resumecompanyname != null">
+        #{resumecompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumepositionname != null">
+        #{resumepositionname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkyearstart != null">
+        #{resumeworkyearstart,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkmonthstart != null">
+        #{resumeworkmonthstart,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkyearend != null">
+        #{resumeworkyearend,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkmonthend != null">
+        #{resumeworkmonthend,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprojectname != null">
+        #{resumeprojectname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprojectposition != null">
+        #{resumeprojectposition,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprojectyearstart != null">
+        #{resumeprojectyearstart,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectyearend != null">
+        #{resumeprojectyearend,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectmonthstart != null">
+        #{resumeprojectmonthstart,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectmonthend != null">
+        #{resumeprojectmonthend,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectdesc != null">
+        #{resumeprojectdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeschoolname != null">
+        #{resumeschoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumedegree != null">
+        #{resumedegree,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprofessional != null">
+        #{resumeprofessional,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeschoolyearstart != null">
+        #{resumeschoolyearstart,jdbcType=DATE},
+      </if>
+      <if test="resumeschoolyearend != null">
+        #{resumeschoolyearend,jdbcType=DATE},
+      </if>
+      <if test="resumeselfdesc != null">
+        #{resumeselfdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworklink != null">
+        #{resumeworklink,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkdesc != null">
+        #{resumeworkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resumelastupdate != null">
+        #{resumelastupdate,jdbcType=DATE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="resumedelstatus != null">
+        #{resumedelstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lagou.vo.ResumeExample" resultType="java.lang.Long">
+    select count(*) from resume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update resume
+    <set>
+      <if test="record.resumeid != null">
+        resumeId = #{record.resumeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.resumename != null">
+        resumeName = #{record.resumename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumegender != null">
+        resumeGender = #{record.resumegender,jdbcType=INTEGER},
+      </if>
+      <if test="record.resumeexperience != null">
+        resumeExperience = #{record.resumeexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumephone != null">
+        resumePhone = #{record.resumephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeemail != null">
+        resumeEmail = #{record.resumeemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumecurrentstate != null">
+        resumeCurrentState = #{record.resumecurrentstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeexpectcity != null">
+        resumeExpectCity = #{record.resumeexpectcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworkingproperty != null">
+        resumeWorkingProperty = #{record.resumeworkingproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeexpectposition != null">
+        resumeExpectPosition = #{record.resumeexpectposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeexpectsalary != null">
+        resumeExpectSalary = #{record.resumeexpectsalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumecompanyname != null">
+        resumeCompanyName = #{record.resumecompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumepositionname != null">
+        resumePositionName = #{record.resumepositionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworkyearstart != null">
+        resumeWorkYearStart = #{record.resumeworkyearstart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworkmonthstart != null">
+        resumeWorkMonthStart = #{record.resumeworkmonthstart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworkyearend != null">
+        resumeWorkYearEnd = #{record.resumeworkyearend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworkmonthend != null">
+        resumeWorkMonthEnd = #{record.resumeworkmonthend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeprojectname != null">
+        resumeProjectName = #{record.resumeprojectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeprojectposition != null">
+        resumeProjectPosition = #{record.resumeprojectposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeprojectyearstart != null">
+        resumeProjectYearStart = #{record.resumeprojectyearstart,jdbcType=DATE},
+      </if>
+      <if test="record.resumeprojectyearend != null">
+        resumeProjectYearEnd = #{record.resumeprojectyearend,jdbcType=DATE},
+      </if>
+      <if test="record.resumeprojectmonthstart != null">
+        resumeProjectMonthStart = #{record.resumeprojectmonthstart,jdbcType=DATE},
+      </if>
+      <if test="record.resumeprojectmonthend != null">
+        resumeProjectMonthEnd = #{record.resumeprojectmonthend,jdbcType=DATE},
+      </if>
+      <if test="record.resumeprojectdesc != null">
+        resumeProjectDesc = #{record.resumeprojectdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeschoolname != null">
+        resumeSchoolName = #{record.resumeschoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumedegree != null">
+        resumeDegree = #{record.resumedegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeprofessional != null">
+        resumeProfessional = #{record.resumeprofessional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeschoolyearstart != null">
+        resumeSchoolYearStart = #{record.resumeschoolyearstart,jdbcType=DATE},
+      </if>
+      <if test="record.resumeschoolyearend != null">
+        resumeSchoolYearEnd = #{record.resumeschoolyearend,jdbcType=DATE},
+      </if>
+      <if test="record.resumeselfdesc != null">
+        resumeSelfDesc = #{record.resumeselfdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworklink != null">
+        resumeWorkLink = #{record.resumeworklink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeworkdesc != null">
+        resumeWorkDesc = #{record.resumeworkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumelastupdate != null">
+        resumeLastUpdate = #{record.resumelastupdate,jdbcType=DATE},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.resumedelstatus != null">
+        resumeDelStatus = #{record.resumedelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update resume
+    set resumeId = #{record.resumeid,jdbcType=INTEGER},
+      resumeName = #{record.resumename,jdbcType=VARCHAR},
+      resumeGender = #{record.resumegender,jdbcType=INTEGER},
+      resumeExperience = #{record.resumeexperience,jdbcType=VARCHAR},
+      resumePhone = #{record.resumephone,jdbcType=VARCHAR},
+      resumeEmail = #{record.resumeemail,jdbcType=VARCHAR},
+      resumeCurrentState = #{record.resumecurrentstate,jdbcType=VARCHAR},
+      resumeExpectCity = #{record.resumeexpectcity,jdbcType=VARCHAR},
+      resumeWorkingProperty = #{record.resumeworkingproperty,jdbcType=VARCHAR},
+      resumeExpectPosition = #{record.resumeexpectposition,jdbcType=VARCHAR},
+      resumeExpectSalary = #{record.resumeexpectsalary,jdbcType=VARCHAR},
+      resumeCompanyName = #{record.resumecompanyname,jdbcType=VARCHAR},
+      resumePositionName = #{record.resumepositionname,jdbcType=VARCHAR},
+      resumeWorkYearStart = #{record.resumeworkyearstart,jdbcType=VARCHAR},
+      resumeWorkMonthStart = #{record.resumeworkmonthstart,jdbcType=VARCHAR},
+      resumeWorkYearEnd = #{record.resumeworkyearend,jdbcType=VARCHAR},
+      resumeWorkMonthEnd = #{record.resumeworkmonthend,jdbcType=VARCHAR},
+      resumeProjectName = #{record.resumeprojectname,jdbcType=VARCHAR},
+      resumeProjectPosition = #{record.resumeprojectposition,jdbcType=VARCHAR},
+      resumeProjectYearStart = #{record.resumeprojectyearstart,jdbcType=DATE},
+      resumeProjectYearEnd = #{record.resumeprojectyearend,jdbcType=DATE},
+      resumeProjectMonthStart = #{record.resumeprojectmonthstart,jdbcType=DATE},
+      resumeProjectMonthEnd = #{record.resumeprojectmonthend,jdbcType=DATE},
+      resumeProjectDesc = #{record.resumeprojectdesc,jdbcType=VARCHAR},
+      resumeSchoolName = #{record.resumeschoolname,jdbcType=VARCHAR},
+      resumeDegree = #{record.resumedegree,jdbcType=VARCHAR},
+      resumeProfessional = #{record.resumeprofessional,jdbcType=VARCHAR},
+      resumeSchoolYearStart = #{record.resumeschoolyearstart,jdbcType=DATE},
+      resumeSchoolYearEnd = #{record.resumeschoolyearend,jdbcType=DATE},
+      resumeSelfDesc = #{record.resumeselfdesc,jdbcType=VARCHAR},
+      resumeWorkLink = #{record.resumeworklink,jdbcType=VARCHAR},
+      resumeWorkDesc = #{record.resumeworkdesc,jdbcType=VARCHAR},
+      resumeLastUpdate = #{record.resumelastupdate,jdbcType=DATE},
+      userId = #{record.userid,jdbcType=INTEGER},
+      resumeDelStatus = #{record.resumedelstatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lagou.vo.Resume">
+    update resume
+    <set>
+      <if test="resumename != null">
+        resumeName = #{resumename,jdbcType=VARCHAR},
+      </if>
+      <if test="resumegender != null">
+        resumeGender = #{resumegender,jdbcType=INTEGER},
+      </if>
+      <if test="resumeexperience != null">
+        resumeExperience = #{resumeexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumephone != null">
+        resumePhone = #{resumephone,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeemail != null">
+        resumeEmail = #{resumeemail,jdbcType=VARCHAR},
+      </if>
+      <if test="resumecurrentstate != null">
+        resumeCurrentState = #{resumecurrentstate,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeexpectcity != null">
+        resumeExpectCity = #{resumeexpectcity,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkingproperty != null">
+        resumeWorkingProperty = #{resumeworkingproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeexpectposition != null">
+        resumeExpectPosition = #{resumeexpectposition,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeexpectsalary != null">
+        resumeExpectSalary = #{resumeexpectsalary,jdbcType=VARCHAR},
+      </if>
+      <if test="resumecompanyname != null">
+        resumeCompanyName = #{resumecompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumepositionname != null">
+        resumePositionName = #{resumepositionname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkyearstart != null">
+        resumeWorkYearStart = #{resumeworkyearstart,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkmonthstart != null">
+        resumeWorkMonthStart = #{resumeworkmonthstart,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkyearend != null">
+        resumeWorkYearEnd = #{resumeworkyearend,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkmonthend != null">
+        resumeWorkMonthEnd = #{resumeworkmonthend,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprojectname != null">
+        resumeProjectName = #{resumeprojectname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprojectposition != null">
+        resumeProjectPosition = #{resumeprojectposition,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprojectyearstart != null">
+        resumeProjectYearStart = #{resumeprojectyearstart,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectyearend != null">
+        resumeProjectYearEnd = #{resumeprojectyearend,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectmonthstart != null">
+        resumeProjectMonthStart = #{resumeprojectmonthstart,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectmonthend != null">
+        resumeProjectMonthEnd = #{resumeprojectmonthend,jdbcType=DATE},
+      </if>
+      <if test="resumeprojectdesc != null">
+        resumeProjectDesc = #{resumeprojectdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeschoolname != null">
+        resumeSchoolName = #{resumeschoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="resumedegree != null">
+        resumeDegree = #{resumedegree,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeprofessional != null">
+        resumeProfessional = #{resumeprofessional,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeschoolyearstart != null">
+        resumeSchoolYearStart = #{resumeschoolyearstart,jdbcType=DATE},
+      </if>
+      <if test="resumeschoolyearend != null">
+        resumeSchoolYearEnd = #{resumeschoolyearend,jdbcType=DATE},
+      </if>
+      <if test="resumeselfdesc != null">
+        resumeSelfDesc = #{resumeselfdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworklink != null">
+        resumeWorkLink = #{resumeworklink,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeworkdesc != null">
+        resumeWorkDesc = #{resumeworkdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resumelastupdate != null">
+        resumeLastUpdate = #{resumelastupdate,jdbcType=DATE},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="resumedelstatus != null">
+        resumeDelStatus = #{resumedelstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lagou.vo.Resume">
+    update resume
+    set resumeName = #{resumename,jdbcType=VARCHAR},
+      resumeGender = #{resumegender,jdbcType=INTEGER},
+      resumeExperience = #{resumeexperience,jdbcType=VARCHAR},
+      resumePhone = #{resumephone,jdbcType=VARCHAR},
+      resumeEmail = #{resumeemail,jdbcType=VARCHAR},
+      resumeCurrentState = #{resumecurrentstate,jdbcType=VARCHAR},
+      resumeExpectCity = #{resumeexpectcity,jdbcType=VARCHAR},
+      resumeWorkingProperty = #{resumeworkingproperty,jdbcType=VARCHAR},
+      resumeExpectPosition = #{resumeexpectposition,jdbcType=VARCHAR},
+      resumeExpectSalary = #{resumeexpectsalary,jdbcType=VARCHAR},
+      resumeCompanyName = #{resumecompanyname,jdbcType=VARCHAR},
+      resumePositionName = #{resumepositionname,jdbcType=VARCHAR},
+      resumeWorkYearStart = #{resumeworkyearstart,jdbcType=VARCHAR},
+      resumeWorkMonthStart = #{resumeworkmonthstart,jdbcType=VARCHAR},
+      resumeWorkYearEnd = #{resumeworkyearend,jdbcType=VARCHAR},
+      resumeWorkMonthEnd = #{resumeworkmonthend,jdbcType=VARCHAR},
+      resumeProjectName = #{resumeprojectname,jdbcType=VARCHAR},
+      resumeProjectPosition = #{resumeprojectposition,jdbcType=VARCHAR},
+      resumeProjectYearStart = #{resumeprojectyearstart,jdbcType=DATE},
+      resumeProjectYearEnd = #{resumeprojectyearend,jdbcType=DATE},
+      resumeProjectMonthStart = #{resumeprojectmonthstart,jdbcType=DATE},
+      resumeProjectMonthEnd = #{resumeprojectmonthend,jdbcType=DATE},
+      resumeProjectDesc = #{resumeprojectdesc,jdbcType=VARCHAR},
+      resumeSchoolName = #{resumeschoolname,jdbcType=VARCHAR},
+      resumeDegree = #{resumedegree,jdbcType=VARCHAR},
+      resumeProfessional = #{resumeprofessional,jdbcType=VARCHAR},
+      resumeSchoolYearStart = #{resumeschoolyearstart,jdbcType=DATE},
+      resumeSchoolYearEnd = #{resumeschoolyearend,jdbcType=DATE},
+      resumeSelfDesc = #{resumeselfdesc,jdbcType=VARCHAR},
+      resumeWorkLink = #{resumeworklink,jdbcType=VARCHAR},
+      resumeWorkDesc = #{resumeworkdesc,jdbcType=VARCHAR},
+      resumeLastUpdate = #{resumelastupdate,jdbcType=DATE},
+      userId = #{userid,jdbcType=INTEGER},
+      resumeDelStatus = #{resumedelstatus,jdbcType=INTEGER}
+    where resumeId = #{resumeid,jdbcType=INTEGER}
+  </update>
+</mapper>

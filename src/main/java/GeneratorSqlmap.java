@@ -11,7 +11,7 @@ public class GeneratorSqlmap {
 	public void generator() throws Exception {
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true;
-		File configFile = new File("src/main/resources/generatorConfig.xml");
+		File configFile = new File("src/main/resources/generatorConfig2.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);
